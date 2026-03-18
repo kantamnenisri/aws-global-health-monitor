@@ -38,6 +38,13 @@ class RawAWSHealthHandler(http.server.SimpleHTTPRequestHandler):
             data = self.fetch_raw_aws_data()
             self.wfile.write(json.dumps(data).encode())
             return
+        
+        elif self.path == "/ping":
+            self.send_response(200)
+            self.send_header('Content-type', 'text/plain')
+            self.end_headers()
+            self.wfile.write(b"OK")
+            return
             
         else:
             return super().do_GET()
